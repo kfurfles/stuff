@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Gerador de ponto</title>
+</head>
+
+<body>
+    <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row" style="max-width: 600px; margin: 50px auto;">
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="ponto1">Ponto 1</label>
+                                <input type="text" disabled class="form-control" id="ponto1">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="ponto2">Ponto 2</label>
+                                <input type="text" disabled class="form-control" id="ponto2">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="ponto3">Ponto 3</label>
+                                <input type="text" disabled class="form-control" id="ponto3">
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="form-group">
+                                <label for="ponto4">Ponto 4</label>
+                                <input type="text" disabled class="form-control" id="ponto4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="generateMarks()" class="btn btn-primary ml-auto mr-auto">Gerar</button>
+                </div>
+            </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/date-fns/1.30.1/date_fns.min.js"
+        integrity="sha512-F+u8eWHrfY8Xw9BLzZ8rG/0wIvs0y+JyRJrXjp3VjtFPylAEEGwKbua5Ip/oiVhaTDaDs4eU2Xtsxjs/9ag2bQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+        const addMinutes = dateFns.addMinutes
+        function randomIntFromInterval(min, max) {
+        // min and max included
+        return Math.floor(Math.random() * (max - min + 1) + min);
+        }
+
+        const toBR = (date) => date.toLocaleString('pt-BR').split(' ')[1].slice(0,5);
+
+        function printDate(date1, date2, date3, date4){
+            document.querySelector('#ponto1').value = date1
+            document.querySelector('#ponto2').value = date2
+            document.querySelector('#ponto3').value = date3
+            document.querySelector('#ponto4').value = date4
+        }
+
+        function generateMarks(){
+            const startRange = randomIntFromInterval(-10, 60);
+            const launchRange = randomIntFromInterval(-60, 60);
+            const initialDate = new Date(new Date().setHours(8, 0));
+
+            const initialTime = new Date(addMinutes(initialDate, startRange));
+            const finalTime = addMinutes(initialTime, 540);
+
+            const startLaunch = addMinutes(new Date(initialDate.setHours(12)), launchRange);
+            const finalLaunch = addMinutes(startLaunch, 60);
+            
+            printDate(
+                toBR(initialTime),
+                toBR(startLaunch),
+                toBR(finalLaunch),
+                toBR(finalTime)
+            )
+        }
+
+
+        
+
+    </script>
+</body>
+
+</html>
